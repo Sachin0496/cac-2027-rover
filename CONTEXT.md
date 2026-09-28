@@ -196,11 +196,15 @@ is an estimate. The PZEM-051 is sold on Robu but its price wasn't visible.
 
 ## 10. CAD and tools
 
-- **Onshape (free Education plan)** — main robot assembly. Browser-based, several people can edit
-  at once, built-in version history, exports STEP/STL. No powerful laptop needed.
-- **OpenSCAD or build123d (Python)** — code-based generators for parts we iterate on (wheels,
-  bucket): change grouser count/height or bucket volume and re-export.
-- **FreeCAD** — fully free, offline alternative if Onshape doesn't suit.
+**Decision (2026-09-28): free tools only, no paid licences.**
+
+- **FreeCAD 1.1** (free, open-source, offline) — main robot assembly; exports STEP/STL.
+  Install on macOS: `brew install --cask freecad`.
+- **OpenSCAD** (free) — code-based generators for parts we iterate on. `cad/wheel.scad` is the
+  parametric grouser wheel: change grouser count/height, hub or bearing options and re-export.
+  Install on macOS: `brew install --cask openscad@snapshot` (the stable 2021 cask is disabled).
+- **Onshape (free Education plan)** — optional browser alternative if several people need to edit
+  the same model at once; each person signs up with a student account.
 - **Day 1:** a 1:1 cardboard mock-up to check the envelope and component layout before CAD.
 - Why bother with CAD: envelope inspection, printing, and the ₹30k Best Design Award.
 

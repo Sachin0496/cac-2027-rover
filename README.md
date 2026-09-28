@@ -6,11 +6,14 @@ builds a berm — first by remote control, then autonomously.
 
 - **Start here:** [CONTEXT.md](CONTEXT.md) — rules, scoring, strategy, design, budget, timeline, risks.
 - **Parts and budget:** [hardware/bom.csv](hardware/bom.csv) — update `purchase_status` as things arrive.
+- **CAD:** free tools only — FreeCAD for the assembly, OpenSCAD for parametric parts.
+  First part: [cad/wheel.scad](cad/wheel.scad) (grouser wheel). Render with
+  `openscad --backend=manifold -o wheel.stl cad/wheel.scad`.
 
 ## Planned layout
 
 ```
-cad/        STEP/STL exports + link to the Onshape document
+cad/        FreeCAD assembly, OpenSCAD parametric parts, STEP/STL exports
 hardware/   BOM, wiring diagram, power budget
 firmware/   ESP32 motor/sensor firmware
 ros2_ws/    ROS 2 Jazzy workspace (teleop, drivers, localisation, mission state machine)
