@@ -1,0 +1,22 @@
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# ROS 2 (colcon)
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+
+# ESP32 (PlatformIO)
+.pio/
+
+# CAD backups
+*.FCBak
+*.bak
