@@ -6,10 +6,10 @@
 // Render:   openscad --backend=manifold -o wheel.stl wheel.scad
 // Variant:  openscad -D grouser_count=16 -D grouser_h=15 -o wheel_g16.stl wheel.scad
 //
-// The motor's 6 mm D-shaft goes into the hub from the open (inner) side.
-// With use_bearing = true, a 608 bearing sits in the outer face and rides on
-// an M8 stub axle held by an outer bracket, so the gearbox shaft doesn't
-// carry the robot's weight.
+// The motor's 6 mm D-shaft goes into the hub from the open (inner) side, and
+// the gearbox face sits just behind the hub, so the wheel load acts right at
+// the gearbox's output bushing. use_bearing = true adds a 608 pocket in the
+// outer face for an optional outboard M8 stub axle (not used in v1).
 
 /* [Rim] */
 rim_d = 150;        // rim outer diameter; grousers add 2 × grouser_h
@@ -27,14 +27,14 @@ hub_d = 32;
 hub_len = 25;       // from the outer face towards the motor
 shaft_d = 6.0;
 shaft_flat = 5.5;   // across-flats of the D-shaft; measure yours
-shaft_depth = 15;
+shaft_depth = 21;
 clearance = 0.2;    // fit allowance; tune with a test print
 grub_d = 3.2;       // M3 grub screw onto the shaft flat
 nut_w = 5.7;        // M3 nut across flats + clearance
 nut_t = 2.6;
 
 /* [Outboard 608 bearing] */
-use_bearing = true;
+use_bearing = false;
 bearing_d = 22.2;
 bearing_w = 7.2;
 
@@ -64,7 +64,7 @@ module d_profile(d, flat) {
     }
 }
 
-module wheel() {
+module wheel(bearing = use_bearing) {
     difference() {
         union() {
             // rim
@@ -99,7 +99,7 @@ module wheel() {
             cube([nut_w, nut_t, hub_len]);
 
         // 608 bearing pocket in the outer face
-        if (use_bearing)
+        if (bearing)
             translate([0, 0, -1]) cylinder(d = bearing_d, h = bearing_w + 1);
     }
 }

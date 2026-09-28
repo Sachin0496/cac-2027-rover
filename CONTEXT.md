@@ -104,8 +104,11 @@ so the lower tiers appear to stack (e.g. travel + dig + dump = 375). **Confirm w
 - **Small, light rover (~8–12 kg).** Scoring divides by mass: 12 L of sand in a 15-min run from a
   10 kg robot ≈ 12,000 ÷ (15 × 10) × 4.4 ≈ **352 mass points** — about the same as the
   organisers' 66 kg example moving 77 L.
-- **Budget ≤ ₹25k, target ≈ ₹21k** (≈ ₹18k if the college provides filament). Excludes the
+- **Budget ≤ ₹25k, v1 ≈ ₹22k** (≈ ₹19k if the college provides filament). Excludes the
   Raspberry Pis (we have several), a borrowed router, laptops, the college 3D printer and travel.
+- **Excavator = rotating bucket drum** (research-backed, see `docs/v1-build-guide.md`): a light
+  rover can't push a front bucket through sand, but a drum takes small bites, and one part
+  digs, carries and dumps.
 - **Autonomy ladder:** 125 (auto dig + dump) → 375 (+ travel) → **450** (one clean autonomous
   cycle at the run start, then remote control to build berm volume). Go for 600 only if
   practice runs show almost every full cycle succeeding.
@@ -117,24 +120,30 @@ so the lower tiers appear to stack (e.g. travel + dig + dump = 375). **Confirm w
 
 ## 7. System design
 
-### Mechanical
-- 4-wheel skid steer on **Johnson 12 V geared motors**. Use a low-RPM version (~60 RPM) for drive —
-  the 100 RPM version is only ~5.7 kg·cm, weak for loose sand.
-- **3D-printed grouser wheels:** ≥15 cm diameter, ≥6 cm wide, 12–16 grousers ~1–1.5 cm tall,
-  supported on 608 bearings so the gearbox shaft doesn't carry the robot's weight. Print 3–4
-  variants and pick the one that climbs out of a dug hole without digging itself in.
-- **Front bucket** (~1.5 L, PETG with a metal lip) lifted by a **printed lead-screw actuator**
-  (M8 threaded rod + a ~300 RPM Johnson motor, ~6 mm/s, self-locking so it holds without power).
-  A mechanical stop tips the bucket at the top of the lift (one actuator does lift + dump).
-- Frame rails in aluminium tube or plywood; printed joints, brackets and motor mounts.
-- Sealed printed electronics box, motor and lens dust covers, and a sleeve over the lead screw
-  (sand jams threads).
+The v1 CAD model is in `cad/` (open `cad/rover.scad`); the build guide with cut, print and
+hardware lists is `docs/v1-build-guide.md`.
+
+### Mechanical (v1)
+- 4-wheel skid steer on **Johnson 12 V geared motors, ~30 RPM** (torque first; ~0.27 m/s). The
+  100 RPM version is only ~5.7 kg·cm, weak for loose sand. Motors hang under the rail corners in
+  printed clamps that also tie each rail to its cross member.
+- **3D-printed grouser wheels:** 174 mm over 14 grousers, 60 mm wide, directly on the D-shafts
+  with the wheel load right at the gearbox face (outboard 608 bearings are an optional upgrade).
+- **Bucket drum** on the front: 160 mm shell, 200 mm long, 8 scoops in two rings clocked 45°,
+  internal spiral baffles, ~1.4 L usable. Spins ~30 RPM on a Johnson motor clamped in the left arm.
+- **Lift:** two printed arms pivot on the rail ends; a lever and two pushrods connect them to a
+  **printed lead-screw actuator** on the deck (M8 rod, ~300 RPM Johnson, ~6 mm/s, 83 mm stroke,
+  self-locking). Arm −25° press / −20° dig / +35° carry.
+- 20 × 20 aluminium tube frame (420 × 300), 6 mm plywood deck. Stowed 632 × 440 × 581 mm,
+  ~7.5 kg empty (estimate), 80 % of the loaded weight on the front axle.
+- Sealed printed electronics box, vented driver hood, dust covers.
 
 ### Electrical
 ```
 3S Li-ion pack (≥20 A BMS) → PZEM-051 logger → E-stop (+ relay) → main fuse
     ├─ BTS7960 × 2 → drive motors (left side / right side)
-    ├─ BTS7960 × 1 → bucket actuator motor
+    ├─ BTS7960 × 1 → drum motor
+    ├─ BTS7960 × 1 → lift actuator motor
     └─ 5 V / 5 A buck → Raspberry Pi 5 → ESP32, sensors
 ```
 - Powering the Pi from the main pack (after the logger) means **all** energy is logged — the
@@ -145,9 +154,10 @@ so the lower tiers appear to stack (e.g. travel + dig + dump = 375). **Confirm w
 - **Raspberry Pi 5 (4 GB)**; a second Pi can take the vision work if one is too slow.
 - **ESP32** for motor PWM, encoders and limit switches (real-time jobs off the Pi).
 - **1 USB webcam on an SG90 pan mount:** faces forward for driving, turns back to see AprilTags.
-- **3 × VL53L1X laser ToF sensors** angled down/forward as the hazard detector:
-  rock = range shorter than flat ground; crater = range longer / no return. Class 1 laser → allowed
-  (bring the datasheet). Use the XSHUT pins to give each sensor its own I²C address.
+- **3 × VL53L1X laser ToF sensors** as the hazard detector: two on plates ahead of the front
+  wheels looking 35° down the wheel tracks, one on the mast looking backwards for reversing.
+  Rock = range shorter than flat ground; crater = range longer / no return. Class 1 laser →
+  allowed (bring the datasheet). Use the XSHUT pins to give each sensor its own I²C address.
 - **MPU6050 IMU** (6-axis, no magnetometer → nothing to explain for the compass rule).
 
 ### Software (Ubuntu 24.04 + ROS 2 Jazzy on the Pi 5)
@@ -162,32 +172,33 @@ so the lower tiers appear to stack (e.g. travel + dig + dump = 375). **Confirm w
   Every state gets a timeout and a recovery (back up, retry the dig, re-localise, or declare
   failure and hand over to RC).
 
-## 8. Budget (target ≈ ₹21k) — full list in `hardware/bom.csv`
+## 8. Budget (v1 ≈ ₹22k) — full list in `hardware/bom.csv`
 
 | Group | ₹ |
 |---|---|
-| 5 Johnson geared motors (4 drive + 1 actuator) | 2,500 |
-| 3 BTS7960 motor drivers | 900 |
-| Lead-screw actuator hardware (M8 rod, nuts, bearings, limit switches) | 300 |
+| 6 Johnson geared motors (4 drive + drum + actuator) | 3,000 |
+| 4 BTS7960 motor drivers | 1,200 |
+| Lift hardware (608 bearings, M8 rod and bolts, coupler, limit switches) | 570 |
+| Fasteners + heat-set inserts | 700 |
+| Aluminium tube (3 m) + plywood deck | 800 |
 | 3 VL53L1X ToF sensors | 1,500 |
 | USB webcam + SG90 pan servo | 1,150 |
 | MPU6050 + ESP32 | 700 |
 | 3S Li-ion pack (≥20 A BMS) + charger | 2,500 |
 | E-stop, relay, fuses, connectors, wire, 5 V buck | 2,500 |
 | PZEM-051 energy meter | 2,000 |
-| Chassis stock, 608 bearings, fasteners | 1,500 |
-| ~3 kg PETG filament | 3,000 |
+| ~3 kg PETG filament (v1 uses ~2.6 kg) | 3,000 |
 | Practice sand pit + AprilTag prints | 1,000 |
 | Spares | 1,500 |
-| **Total** | **≈ 21,050** |
+| **Total** | **≈ 22,120** |
 
 Prices marked "listed" in the CSV came from Indian store listings on 2026-09-28; everything else
 is an estimate. The PZEM-051 is sold on Robu but its price wasn't visible.
 
 ## 9. 3D printing plan
 
-- **Print:** wheels, bucket, lead-screw actuator parts, bucket linkage, motor mounts, brackets and
-  frame joints, camera pan mount, ToF/IMU mounts, electronics box, dust covers, AprilTag stands
+- **Print:** 29 part types for v1 (list and quantities in `docs/v1-build-guide.md` §3; STLs in
+  `cad/stl/`), all within a 220 × 220 mm bed and without supports. Also AprilTag stands
   (weighted bases, ≤60 cm).
 - **Settings:** PETG (handles heat and knocks better than PLA), 3–4 walls, 20–25% gyroid infill;
   metal bolts as pivot pins; heat-set inserts wherever screws go into plastic.
@@ -198,11 +209,13 @@ is an estimate. The PZEM-051 is sold on Robu but its price wasn't visible.
 
 **Decision (2026-09-28): free tools only, no paid licences.**
 
-- **FreeCAD 1.1** (free, open-source, offline) — main robot assembly; exports STEP/STL.
-  Install on macOS: `brew install --cask freecad`.
-- **OpenSCAD** (free) — code-based generators for parts we iterate on. `cad/wheel.scad` is the
-  parametric grouser wheel: change grouser count/height, hub or bearing options and re-export.
+- **OpenSCAD** (free) — the v1 model is written in OpenSCAD and is the editable master:
+  `cad/rover.scad` (assembly), `cad/params.scad` (all shared dimensions), one file per
+  subsystem. `check_interference.py` checks for collisions; `export.py` makes the STLs.
   Install on macOS: `brew install --cask openscad@snapshot` (the stable 2021 cask is disabled).
+- **FreeCAD 1.1** (free, open-source, offline) — for viewing, measuring and new parts.
+  `cad/rover_v1.FCStd` (and `rover_v1.step.zip` for other CAD) is generated from the OpenSCAD
+  model by `export_freecad.py`; don't edit it by hand. Install: `brew install --cask freecad`.
 - **Onshape (free Education plan)** — optional browser alternative if several people need to edit
   the same model at once; each person signs up with a student account.
 - **Day 1:** a 1:1 cardboard mock-up to check the envelope and component layout before CAD.

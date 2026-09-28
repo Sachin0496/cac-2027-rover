@@ -1,18 +1,20 @@
 item,qty,unit_price_inr,total_inr,price_basis,source,purchase_status,notes
-Johnson 12V geared DC motor ~60 RPM (drive),4,500,2000,listed,Robokits (100 RPM Grade A listed at ₹477),to buy,100 RPM version is only ~5.7 kg·cm; lower RPM = more torque for sand
-Johnson 12V geared DC motor ~300 RPM (lead-screw actuator),1,500,500,estimate,Robokits / Robu,to buy,M8 pitch 1.25 mm × 300 RPM ≈ 6 mm/s
-BTS7960 43A motor driver module,3,300,900,listed,Robokits ₹256; others ₹329–353,to buy,left drive / right drive / actuator
-Lead-screw hardware (M8 rod; nuts; 2× 608 bearings; coupler; 2 limit switches),1,300,300,estimate,local hardware store,to buy,printed sleeve keeps sand off the thread
-VL53L1X ToF distance sensor,3,500,1500,listed,Robokits ₹402; KTRON ₹570,to buy,Class 1 laser (allowed); use XSHUT pins for unique I2C addresses
+Johnson 12V geared DC motor ~30 RPM (drive),4,500,2000,listed,Robokits (100 RPM Grade A listed at ₹477),to buy,slow version for torque in sand (~0.27 m/s with 174 mm wheels); 45/60 RPM if too slow
+Johnson 12V geared DC motor ~30 RPM (drum),1,500,500,listed,Robokits / Robu,to buy,10 RPM version is the high-torque fallback (same mount)
+Johnson 12V geared DC motor ~300 RPM (lift actuator),1,500,500,estimate,Robokits / Robu,to buy,M8 pitch 1.25 mm × 300 RPM ≈ 6 mm/s
+BTS7960 43A motor driver module,4,300,1200,listed,Robokits ₹256; others ₹329–353,to buy,left drive / right drive / drum / actuator
+Lift hardware: 5× 608 bearings; 1 m M8 rod; M8 bolts/nuts/washers; 6→8 mm coupler; 2 limit switches,1,570,570,estimate,local hardware store / Robu,to buy,see docs/v1-build-guide.md §4
+Fasteners: M3/M4/M5 assortment + 50 M4 heat-set inserts,1,700,700,estimate,local / Amazon.in,to buy,see docs/v1-build-guide.md §4
+Aluminium 20×20×1.5 square tube (3 m) + 6 mm plywood 400×300,1,800,800,estimate,local,to buy,cut list in docs/v1-build-guide.md §2
+VL53L1X ToF distance sensor,3,500,1500,listed,Robokits ₹402; KTRON ₹570,to buy,2 front (wheel tracks) + 1 rear; Class 1 laser (allowed)
 USB webcam 720p,1,1000,1000,estimate,,to buy,driving view + AprilTag detection
-SG90 micro servo (camera pan),1,150,150,estimate,,to buy,printed pan mount
+SG90 micro servo (camera pan),1,150,150,estimate,,to buy,
 MPU6050 IMU (6-axis),1,200,200,estimate,,to buy,no magnetometer = nothing to disable for the compass rule
 ESP32 dev board,1,500,500,estimate,,to buy,motor PWM + encoders + limit switches
 3S Li-ion pack 11.1V with ≥20A BMS + 12.6V charger,1,2500,2500,estimate,BatteryWorks 3S2P 5200mAh pack listed at ₹900,to buy,check BMS current rating against motor stall currents
 E-stop (COTS red mushroom ≥40 mm twist-release) + relay + fuses + XT60 + wire + 5V/5A buck,1,2500,2500,estimate,Amazon.in / local electrical shop,to buy,one press must cut the battery from all controllers
 PZEM-051 DC energy meter with shunt,1,2000,2000,estimate,Robu.in (price not visible),to buy,wire between battery and E-stop; mount high and visible
-Chassis stock (aluminium tube or plywood) + 608 bearings + fasteners + heat-set inserts,1,1500,1500,estimate,local,to buy,
-PETG filament (kg),3,1000,3000,estimate,,to buy,wheels; bucket; actuator; brackets; enclosure; tag stands
+PETG filament (kg),3,1000,3000,estimate,,to buy,~2.6 kg for all v1 parts (export.py) + spare for reprints
 Practice sand pit + printed AprilTags,1,1000,1000,estimate,,to buy,beach / volleyball / construction sand is fine for the video
 Spares (motor; driver; fuses; cells),1,1500,1500,estimate,,to buy,
-TOTAL,,,21050,,,,excludes Raspberry Pi 5 (have); dual-band router (borrow); laptops; 3D printer; travel
+TOTAL,,,22120,,,,excludes Raspberry Pi 5 (have); dual-band router (borrow); laptops; 3D printer; travel

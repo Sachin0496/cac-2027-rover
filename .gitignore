@@ -20,3 +20,6 @@ ros2_ws/log/
 # CAD backups
 *.FCBak
 *.bak
+
+# Generated STEP is large; the zip is committed instead
+cad/rover_v1.step
