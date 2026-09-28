@@ -65,6 +65,11 @@ def export_parts():
             problems.append(f"{name} ({size[0]:.0f} × {size[1]:.0f} × {size[2]:.0f}) does not fit the bed")
         if abs(lo[2]) > 0.01:
             problems.append(f"{name} is not sitting on the bed (min z = {lo[2]:.2f})")
+    names = {name for name, _ in table}
+    for old in STL.glob("*.stl"):
+        if old.stem not in names:
+            old.unlink()
+            print("removed stale", old.name)
     print(f"\nFilament ≈ {total_g / 1000:.2f} kg PETG (all parts, estimate)")
     for p in problems:
         print("PROBLEM:", p)
