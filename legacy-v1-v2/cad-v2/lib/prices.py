@@ -46,10 +46,10 @@ PRICES = {
     # ---- electronics and sensors
     "bts7960": (300, _L, "Robokits RKI-6606 at 256; others 329-353 (v1 price)", "43 A H-bridge driver: left drive, right drive, drum, lift"),
     "relay": (250, _E, "Amazon.in / local electrical shop", "12 V 40 A automotive relay with socket, fails open"),
-    "buck": (250, _E, "Amazon.in / Robu", "5 V 5 A step-down (LM2596/XL4015 class) for the Pi and sensors"),
+    "buck": (300, _E, "Amazon.in / Robu", "5 V 5 A step-down for the Pi 5 and sensors. Needs a real 5 A part (XL4015 module or a 5 V UBEC); an LM2596 module is only 3 A and browns out the Pi under motor-start dips. Fit a 1000 uF cap on its output; give the SG90 servo its own cap"),
     "fuse_holder": (100, _E, "Amazon.in / local electrical shop", "inline blade-fuse holder (main and branch)"),
     "pi5": (0, _H, "the team has it", "Raspberry Pi 5 with active cooler (excluded from the total)"),
-    "esp32": (500, _E, "Robu / Amazon.in (v1 price)", "ESP32 dev board: motor PWM, encoders, limit switches"),
+    "esp32": (500, _E, "Robu / Amazon.in (v1 price)", "ESP32 dev board: motor PWM, encoders, limit switches. Its Wi-Fi and Bluetooth radios must be switched off in firmware (rules: only the assigned SSID may transmit; Bluetooth class 2/3 only)"),
     "mpu6050": (200, _E, "Robu / Amazon.in (v1 price)", "6-axis IMU, no magnetometer"),
     "battery_3s2p": (2500, _E, "BatteryWorks 3S2P 5200 mAh pack listed at 900; pack with 20 A BMS and charger (v1 price)", "3S2P Li-ion pack, 11.1 V, at least 20 A BMS, plus 12.6 V charger"),
     "estop": (400, _E, "Evelta XB2-BS542 at 198 (head size not in the listing: the genuine XB2-BS542 is 40 mm, check it); Probots ProMax metal at 899", "22 mm panel-mount, twist-release, red mushroom head of at least 40 mm (modelled with 60 mm); any listed head size complies"),
@@ -67,6 +67,8 @@ EXTRA_LINES = (
     ("Wire, connectors, XT60, ferrules, heat-shrink, cable ties", 1, 1000, _E, "local electrical shop", "the 250 g wiring allowance in the mass budget"),
     ("Practice sand pit + printed AprilTags", 1, 1000, _E, "local", "beach, volleyball or construction sand is fine; for the working-rover video"),
     ("Lift limit switches: 2 micro switches with lever, wire", 1, 100, _E, "Robu / Amazon.in", "not in the model; one at each end of the lift channel"),
+    ("Encoder upgrade: 2 of the 4 drive motors as Johnson 30 RPM quad-encoder (one per side)", 2, 668, _L, "Robokits 30 RPM Johnson quad encoder motor 1,080 minus the plain RKI-1156 at 412, seen 2026-10-01",
+     "the plain Johnson motors have no encoder, so v2 had no wheel odometry and no closed-loop speed control; the encoder sits on the rear of the motor can, inboard of the gearbox, so the cradles are unchanged. Re-measure the can length (JM_CAN_LEN)"),
     ("Spares (motor, driver, fuses, cells)", 1, 1500, _E, "Robokits / Robu / local", "same allowance as v1"),
 )
 FILAMENT_PER_KG = (1000, _E, "Amazon.in / local", "PETG 1.75 mm, 1 kg spool; buy the printed total x 1.10 for brims, purge and one reprint")

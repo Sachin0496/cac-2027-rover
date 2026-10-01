@@ -14,7 +14,7 @@ as hoped.
 | Drum | one 490 g piece, about 20 h | 4 rings + 2 plates, largest print 101 g |
 | Empty mass, same accounting | about 7.0 kg (its own table says 7.5) | 7.69 kg modelled + 0.25 kg wiring = 7.94 kg |
 | Front-axle share, full drum | 80 % | 74 % |
-| Cost | INR 22,120 | INR 23,329 (cap 25,000) |
+| Cost | INR 22,120 | INR 24,715 after the 2026-10-01 review (23,329 before; cap 25,000) |
 | Printed | 29 types, 2.6 kg | 43 types, 2.55 kg |
 | Checks | interference at four arm angles | 120 tests; collisions at five poses, 2 mm sweep clearance, floating hardware, no-support printing, load paths, rules, sensor views, mass and balance |
 
@@ -54,7 +54,7 @@ load, limit 1 mm), and automatic cut-planning of the aluminium into three 1 m ba
 - **Front-axle share** ended at 74 %, not the spec's 72 %, because the excavator ended up heavier than budgeted. It passes the 75 % limit with 1 point to spare only
   because the rear axle moved forward (with the original wheelbase of 300 mm it was 76 %). The limit is checked at the carry pose, which is how the rover drives when loaded;
   with a full drum and the arm left level it would be 78 %.
-- **Cost.** INR 23,329 fits the cap of 25,000 with INR 1,700 to spare. Only the extrusion, the Johnson motors, the BTS7960 drivers, the ToF sensors and the corner brackets are store listings;
+- **Cost.** INR 24,715 (after the 2026-10-01 review added encoders; 23,329 before) fits the cap of 25,000 with INR 285 to spare. Only the extrusion, the Johnson motors, the BTS7960 drivers, the ToF sensors and the corner brackets are store listings;
   everything else is an estimate (see `v2-order-list.md`). The PZEM-051 is booked at v1's INR 2,000 and is probably cheaper.
 - **Not verified by a real print.** Every printability claim is geometric (no overhang steeper than 45 degrees off the bed or a bridge wider than 8 mm). Print the fit-test kit first.
 
@@ -65,3 +65,8 @@ load, limit 1 mm), and automatic cut-planning of the aluminium into three 1 m ba
 3. Measure the boards, relay, PZEM and battery when they arrive; update `lib/cots.py` and `BATT`.
 4. Mount the two lift limit switches and decide the carriage software limits (working range 20 to 79.5 mm).
 5. Decide whether the 0.44 kg over the 7.5 kg goal matters enough to drop the cosmetic parts above.
+
+## Design review, 2026-10-01
+A review against the 2027 problem statement found four things fixed in the sources (no encoders in the BOM, ESP32 radios not addressed, an under-rated 5 V converter,
+an over-optimistic score estimate) and a list of bench tests. Details and the reasoning are in `CONTEXT.md` section 17. Net effect on the model: none; on the BOM:
++INR 1,386 (two encoder motors, a genuine 5 A converter), total INR 24,715 against the 25,000 cap.

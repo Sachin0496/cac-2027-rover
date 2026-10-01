@@ -67,7 +67,9 @@ plus large bonuses for **autonomy**.
 - **Comms:** our own unmodified dual-band 802.11 router (2.4 GHz must be switchable off),
   assigned SSID, WPA2/3, no hidden SSID, 20 MHz channels on 2.4 GHz, no amplifiers; 5 GHz
   allowed. **Average link ≤ 4,000 kbps.** Organisers provide no Wi-Fi. No 2.4 GHz Zigbee;
-  Bluetooth class 2/3 only.
+  Bluetooth class 2/3 only. **Every** wireless device on the robot may only transmit on the
+  assigned SSID: switch off the ESP32's Wi-Fi and Bluetooth in firmware (its default BT power
+  is above the 2.5 mW class-2 limit), turn off the Pi's Bluetooth, and keep the Pi on 5 GHz.
 - **Markers/beacons:** max 5 (all markers or all beacons) or 2 beacons + 3 markers. Placed on the
   start-zone frame (2 sides) plus one on the start-zone wall; not in the obstacle zone, berm
   zone, other walls, floor or ceiling. Markers ≤ 25 × 25 cm, ≤ 60 cm high, one tag per marker.
@@ -103,10 +105,14 @@ so the lower tiers appear to stack (e.g. travel + dig + dump = 375). **Confirm w
 
 - **Small, light rover (~8–12 kg).** Scoring divides by mass: 12 L of sand in a 15-min run from a
   10 kg robot ≈ 12,000 ÷ (15 × 10) × 4.4 ≈ **352 mass points** — about the same as the
-  organisers' 66 kg example moving 77 L.
+  organisers' 66 kg example moving 77 L. **That 12 L is optimistic** (see §17): at 0.27 m/s with
+  a 1.4 L drum a dig–dump cycle takes about 2.3–2.7 min, so a 15-min finale moves 5–6 L
+  (≈ 150–250 mass points) and the 10-min prelims 3 L (≈ 130–185). The berm terms are therefore
+  worth far less than the autonomy tiers (250–600) and the +120 for no arena camera: spend
+  effort on reliable autonomy and mobility, not on shaving grams.
 - **Budget ≤ ₹25k, v1 ≈ ₹22k** (≈ ₹19k if the college provides filament). Excludes the
   Raspberry Pis (we have several), a borrowed router, laptops, the college 3D printer and travel.
-- **Excavator = rotating bucket drum** (research-backed, see `docs/v1-build-guide.md`): a light
+- **Excavator = rotating bucket drum** (research-backed, see `legacy-v1-v2/docs/v1-build-guide.md`): a light
   rover can't push a front bucket through sand, but a drum takes small bites, and one part
   digs, carries and dumps.
 - **Autonomy ladder:** 125 (auto dig + dump) → 375 (+ travel) → **450** (one clean autonomous
@@ -120,8 +126,8 @@ so the lower tiers appear to stack (e.g. travel + dig + dump = 375). **Confirm w
 
 ## 7. System design
 
-The v1 CAD model is in `cad/` (open `cad/rover.scad`); the build guide with cut, print and
-hardware lists is `docs/v1-build-guide.md`.
+The v1 CAD model is in `legacy-v1-v2/cad/` (open `legacy-v1-v2/cad/rover.scad`); the build guide with cut, print and
+hardware lists is `legacy-v1-v2/docs/v1-build-guide.md`.
 
 ### Mechanical (v1)
 - 4-wheel skid steer on **Johnson 12 V geared motors, ~30 RPM** (torque first; ~0.27 m/s). The
@@ -172,7 +178,7 @@ hardware lists is `docs/v1-build-guide.md`.
   Every state gets a timeout and a recovery (back up, retry the dig, re-localise, or declare
   failure and hand over to RC).
 
-## 8. Budget (v1 ≈ ₹22k) — full list in `hardware/bom.csv`
+## 8. Budget (v1 ≈ ₹22k) — full list in `legacy-v1-v2/hardware/bom.csv`
 
 | Group | ₹ |
 |---|---|
@@ -197,8 +203,8 @@ is an estimate. The PZEM-051 is sold on Robu but its price wasn't visible.
 
 ## 9. 3D printing plan
 
-- **Print:** 29 part types for v1 (list and quantities in `docs/v1-build-guide.md` §3; STLs in
-  `cad/stl/`), all within a 220 × 220 mm bed and without supports. Also AprilTag stands
+- **Print:** 29 part types for v1 (list and quantities in `legacy-v1-v2/docs/v1-build-guide.md` §3; STLs in
+  `legacy-v1-v2/cad/stl/`), all within a 220 × 220 mm bed and without supports. Also AprilTag stands
   (weighted bases, ≤60 cm).
 - **Settings:** PETG (handles heat and knocks better than PLA), 3–4 walls, 20–25% gyroid infill;
   metal bolts as pivot pins; heat-set inserts wherever screws go into plastic.
@@ -210,18 +216,18 @@ is an estimate. The PZEM-051 is sold on Robu but its price wasn't visible.
 **Decision (2026-09-28): free tools only, no paid licences.**
 
 - **OpenSCAD** (free) — the v1 model is written in OpenSCAD and is the editable master:
-  `cad/rover.scad` (assembly), `cad/params.scad` (all shared dimensions), one file per
+  `legacy-v1-v2/cad/rover.scad` (assembly), `legacy-v1-v2/cad/params.scad` (all shared dimensions), one file per
   subsystem. `check_interference.py` checks for collisions; `export.py` makes the STLs.
   Install on macOS: `brew install --cask openscad@snapshot` (the stable 2021 cask is disabled).
 - **FreeCAD 1.1** (free, open-source, offline) — for viewing, measuring and new parts.
-  `cad/rover_v1.FCStd` (and `rover_v1.step.zip` for other CAD) is generated from the OpenSCAD
+  `legacy-v1-v2/cad/rover_v1.FCStd` (and `rover_v1.step.zip` for other CAD) is generated from the OpenSCAD
   model by `export_freecad.py`; don't edit it by hand. Install: `brew install --cask freecad`.
 - **Onshape (free Education plan)** — optional browser alternative if several people need to edit
   the same model at once; each person signs up with a student account.
-- **v2 (2026-09-29): build123d, in `cad-v2/`.** Same concept, re-engineered: parametric Python CAD on the OpenCascade kernel (the one FreeCAD uses), scripted checks for every claim
-  (`python tasks.py check`), B-rep STEP + watertight STLs, an interactive viewer (`cad-v2/out/rover_v2_viewer.html`). Guide: `docs/v2-build-guide.md`; ledger of changes: `docs/v2-changelog.md`;
-  priced parts: `docs/v2-order-list.md` and `hardware/bom_v2.csv` (≈ ₹23.3k). Empty mass 7.94 kg with a 250 g wiring allowance (v1 ≈ 7.0 kg on the same accounting), front-axle share 74 % with a full drum (v1 80 %).
-  v1 in `cad/` is untouched. Print the fit-test kit (`cad-v2/out/stl/fit_test_kit.stl`) before anything else.
+- **v2 (2026-09-29): build123d, in `legacy-v1-v2/cad-v2/`.** Same concept, re-engineered: parametric Python CAD on the OpenCascade kernel (the one FreeCAD uses), scripted checks for every claim
+  (`python tasks.py check`), B-rep STEP + watertight STLs, an interactive viewer (`legacy-v1-v2/cad-v2/out/rover_v2_viewer.html`). Guide: `legacy-v1-v2/docs/v2-build-guide.md`; ledger of changes: `legacy-v1-v2/docs/v2-changelog.md`;
+  priced parts: `legacy-v1-v2/docs/v2-order-list.md` and `legacy-v1-v2/hardware/bom_v2.csv` (≈ ₹24.7k after the 2026-10-01 review). Empty mass 7.94 kg with a 250 g wiring allowance (v1 ≈ 7.0 kg on the same accounting), front-axle share 74 % with a full drum (v1 80 %).
+  v1 in `legacy-v1-v2/cad/` is untouched. Print the fit-test kit (`legacy-v1-v2/cad-v2/out/stl/fit_test_kit.stl`) before anything else.
 - **Day 1:** a 1:1 cardboard mock-up to check the envelope and component layout before CAD.
 - Why bother with CAD: envelope inspection, printing, and the ₹30k Best Design Award.
 
@@ -262,7 +268,11 @@ is an estimate. The PZEM-051 is sold on Robu but its price wasn't visible.
 
 - May markers go anywhere other than the start-zone frame (e.g. the excavation zone)? The 2027
   list of banned zones doesn't mention it, but another rule limits them to the start-zone frame.
-- Prelims setup time: 5 min (Unstop page) or 10 min (problem statement)?
+- ~~Prelims setup time~~ Answered by the 2027 problem statement: prelims 5 min setup / 10 min run / 5 min removal;
+  finale 7 / 15 / 5. (The generic "10 minutes" in the MCC and beacon sections is the 2026 wording.) Five minutes
+  must cover placing the robot, the tags and the Wi-Fi link-up: rehearse it.
+- Where exactly are the construction zone and berm target in the **2027** arena diagram? The problem-statement text
+  has no diagram; §3 relies on the diagram image. The 2026 diagram put the construction zone beside the excavation zone.
 - Is the arena indoors or outdoors, and what is the lighting?
 - Is a separately powered onboard computer (e.g. a Pi on its own battery) fine for energy accounting?
 - Do the autonomy tiers stack exactly (e.g. travel + dig + dump = 375)?
@@ -304,3 +314,32 @@ is an estimate. The PZEM-051 is sold on Robu but its price wasn't visible.
 - [CAC 2026 rulebook (PDF)](https://cac.shaastra.org/assets/CATERPILLAR%20AUTONOMY%20CHALLENGE_2026-Bo_P5MoA.pdf)
 - [Lunabotics mobility workshop (video)](https://youtu.be/bEcldIPXE5c)
 - [NASA Lunabotics systems-engineering videos](https://www.attwaterconsulting.com/NASA%20Lunabotics%20Videos.html)
+
+## 17. Design review, 2026-10-01 (against the 2027 problem statement and the 2026 rulebook)
+
+Reviewed: the 2027 problem statement and resources guide, the 2026 rulebook, `CONTEXT.md`, the v2 build guide, changelog, `params.py`, `calcs.py`,
+`checks/rules.py`, the drum, tower and BOM. Rules that changed from 2026 to 2027 are marked.
+
+### Fixed in this commit
+| # | Finding | Why it matters | Fix |
+|---|---|---|---|
+| 1 | **No encoders anywhere in the BOM**, yet §7 and the ESP32 line promise "encoders" and the EKF fuses "wheel odometry". The plain Robokits RKI-1156 has none. | No odometry across a 5 m obstacle field (gyro-only dead reckoning, ~0.5 m error after a minute), no speed control, so no straight driving on a skid-steer in sand. | BOM: two of the four drive motors become the Robokits 30 RPM quad-encoder Johnson (one per side, +INR 1,336). BOM is now INR 24,715 (cap 25,000). Re-measure `JM_CAN_LEN` when the motors arrive. |
+| 2 | **ESP32 Wi-Fi/Bluetooth not addressed.** Rules: only the assigned SSID may transmit; Bluetooth only at class 2/3 (≤ 2.5 mW). An ESP32 powers up with both radios on. | A failed communications inspection means the robot does not enter the arena. | Firmware must call `esp_wifi_stop()` / `btStop()` (or build with both disabled); Pi: `dtoverlay=disable-bt`, 5 GHz only. §4 and the ESP32 BOM note updated. Be ready to show it at inspection. |
+| 3 | **5 V converter spec was "LM2596/XL4015 class".** An LM2596 module is 3 A; the Pi 5, webcam, three ToF sensors and an SG90 share this rail, and motor-start dips come back through it. | Pi 5 brown-out or reboot mid-run, and the run is over (one attempt). | Spec: genuine 5 A part (XL4015 module or 5 V UBEC, INR 300), 1000 uF on its output, separate cap at the servo. Add `usb_max_current_enable=1` to the Pi's `config.txt`. |
+| 4 | **Score expectation was ~2x optimistic** (12 L in 15 min). | Mis-sets priorities. | §6 now uses the cycle-time estimate below. |
+
+### Findings that are not model changes (act on them while building)
+- **The 8.0 kg limit and the 75 % front-axle share are our own targets, not rules** (the rule limit is 80 kg). The 55 g margin is therefore a score matter, not a compliance risk: 0.4 kg is about 5 % of the mass term (~10 points). Do not trade reliability for grams.
+- **Cycle time.** 30 RPM x 174 mm wheels = 0.27 m/s. One dig–dump cycle is about 21 m of driving (78 s) + dig (~25 s) + dump and alignment (~35 s) = 2.3–2.7 min. Over the 15-min finale that is 5–6 cycles, about 5–8 L if the drum fills 1.0–1.4 L, so ≈ 150–250 mass points and ~20–30 energy points. Over the 10-min prelims it is 3 cycles. The autonomy tiers (250 / 450 / 600) and the +120 for no arena camera are worth more than the whole berm. Do not buy faster motors: torque on sand is the known problem.
+- **Dig depth is the biggest mechanical unknown.** At the dig pose the teeth sit 4 mm below grade (press pose: 10 mm); dry sand cutting force is small, so torque is not the limit but depth is. Loose sand lets the wheels sink a little, which helps. Test in the sand pit before anything else: time to fill the drum, and whether the front wheels lift when pressing. If it digs too shallow, the cheap hedge is a lower press pose (more lift stroke, check the front motor clearance) rather than a bigger drum.
+- **Camera view.** The webcam is at z = 445 mm on the rear mast, pointing level. With ±25 degrees vertical view its lowest ray reaches the ground about 0.95 m ahead of the mast, so the last ~40 cm in front of the drum is blind (the drum itself hides more). This is the only onboard view for teleoperation (no line of sight, arena cameras cost points). Tilt the camera mount about 15 degrees down (not modelled yet) and re-run `tasks.py check`; the pan-0 view check will then also see the hood roof, which is harmless, but update the check to allow it.
+- **Hazard sensing.** Two ToF beams (27 degree cones) from the pivot brackets cover the width of the rover's path about 0.45 m ahead, which is adequate going straight but blind in turns and beside the wheels. Slow down and stop-scan before turning near an obstacle; each rock contact or crater crossing costs −30 (−20 in 2026, **changed in 2027**). Both ToF sensors look 20–25 degrees down and hit the sand within ~0.5 m, which is also the clean answer to the "walls may not be used for sensing" inspection question; cap ToF range in software at 1.5 m and log it.
+- **Wall rams (−50 twice, third cancels the run) must be avoided without sensing the walls.** Build a keep-out margin of 0.5 m from the arena boundary into the planner, and make it larger after a long dead-reckoned stretch.
+- **Battery vs stall current.** The BMS is 20 A; one Johnson 30 RPM stalls at several amps and there are six motors. A BMS trip is the same as an E-stop for the Pi. Wire each BTS7960 `IS` pin to an ESP32 ADC, ramp PWM, cut the drive on a stall (no motion with high current for 0.5 s) and limit the sum of motor currents in software to ~15 A. Measure the stall currents on the bench first.
+- **Markers.** Only on the start-zone frame (2 sides) plus one on the start-zone wall, within 60 cm of the floor, ≤ 25 x 25 cm, one tag per marker, non-glare, maximum 5 (all tags), placed during the 5-minute prelims setup. Make clamp-on tag boards (printed clamps or tape-on plates) and practise placing them with two people in under 60 s. Tag range of ~5 m at 640 x 480 will not cover the whole arena: plan for dead reckoning (gyro + encoders) between the start and construction zones, and re-localise on every tag sighting. Calibrate the MPU6050 gyro bias for 5 s while stationary during setup.
+- **Hands-free procedure.** In 2027 you must declare each autonomy attempt out loud to the Mission Control Judge before the robot starts, and a declared failure must be announced before resuming manual control. Nobody touches the laptop or controller during an attempt (E-stop is on the robot, so MCC cannot E-stop). Write the exact script and rehearse it.
+- **Logger "highest practical location".** The PZEM sits at z = 321 mm below the camera head at 445 mm. The rules want it highest practical, so if a judge objects, swap the PZEM collar with the head collar (the mast carries 750 mm).
+- **Mobility video.** The resources guide asks teams to check their design with the mobility equation from the Lunabotics workshop. Do that and keep the working in `legacy-v1-v2/docs/`: ground pressure here is only ~15 kPa per wheel (36 N over a 60 x 40 mm patch at the loaded front axle), so a light rover should pass, but the guide says many teams failed on mobility in 2026.
+
+### What the model checks do and do not cover
+Mass, balance, collisions at five poses, print rules, load paths, E-stop reach, PZEM view and the 750 mm height limit are scripted and pass (see `python tasks.py check`). Nothing scripted covers: encoders and wiring, radios, tag mounting, dig depth, drum retention of sand in the carry pose, sand ingress under the open belly, and the hazard-sensor blind zones above. These are on the bench-test list in §11.
