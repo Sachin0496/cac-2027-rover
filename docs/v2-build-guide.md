@@ -21,7 +21,7 @@ in this guide is generated from that model, and every claim is backed by a scrip
 | Arm range | press -28 deg (teeth 10 mm below grade), dig -25 deg (4 mm below), level 0, mid +20, carry +35 deg (teeth 147 mm up) |
 | Lift | M8 x 1.25 rod with two brass nuts, stroke 59 mm, self-locking |
 | Printed parts | 43 part types, 2.55 kg of PETG (v1 rule: volume x 1.27 x 0.75), largest 137 g, no supports |
-| Purchased | 48 SKUs, 352 pieces; total budget INR 23,329 with filament (cap 25,000; v1 22,120) |
+| Purchased | 48 SKUs, 352 pieces; total budget INR 24,715 with filament (cap 25,000; v1 22,120) |
 <!-- END:numbers -->
 
 ![Top view](img/v2/top.png)

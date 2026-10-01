@@ -31,10 +31,10 @@ M8x70 hex,1,16,16,estimate,local hardware,to buy,excavator,ISO 4017 hex bolt (dr
 M8x40 hex,1,13,13,estimate,local hardware,to buy,excavator,ISO 4017 hex bolt (drum idler axle)
 bts7960,4,300,1200,listed,Robokits RKI-6606 at 256; others 329-353 (v1 price),to buy,electronics,"43 A H-bridge driver: left drive, right drive, drum, lift"
 relay,1,250,250,estimate,Amazon.in / local electrical shop,to buy,electronics,"12 V 40 A automotive relay with socket, fails open"
-buck,1,250,250,estimate,Amazon.in / Robu,to buy,electronics,5 V 5 A step-down (LM2596/XL4015 class) for the Pi and sensors
+buck,1,300,300,estimate,Amazon.in / Robu,to buy,electronics,5 V 5 A step-down for the Pi 5 and sensors. Needs a real 5 A part (XL4015 module or a 5 V UBEC); an LM2596 module is only 3 A and browns out the Pi under motor-start dips. Fit a 1000 uF cap on its output; give the SG90 servo its own cap
 fuse_holder,2,100,200,estimate,Amazon.in / local electrical shop,to buy,electronics,inline blade-fuse holder (main and branch)
 pi5,1,0,0,have,the team has it,have,electronics,Raspberry Pi 5 with active cooler (excluded from the total)
-esp32,1,500,500,estimate,Robu / Amazon.in (v1 price),to buy,electronics,"ESP32 dev board: motor PWM, encoders, limit switches"
+esp32,1,500,500,estimate,Robu / Amazon.in (v1 price),to buy,electronics,"ESP32 dev board: motor PWM, encoders, limit switches. Its Wi-Fi and Bluetooth radios must be switched off in firmware (rules: only the assigned SSID may transmit; Bluetooth class 2/3 only)"
 mpu6050,1,200,200,estimate,Robu / Amazon.in (v1 price),to buy,electronics,"6-axis IMU, no magnetometer"
 battery_3s2p,1,2500,2500,estimate,BatteryWorks 3S2P 5200 mAh pack listed at 900; pack with 20 A BMS and charger (v1 price),to buy,electronics,"3S2P Li-ion pack, 11.1 V, at least 20 A BMS, plus 12.6 V charger"
 M4x8 socket,2,2.5,5,estimate,local / Amazon.in,to buy,electronics,ISO 4762 socket head
@@ -51,5 +51,6 @@ M5 washer,4,1,4,estimate,local hardware,to buy,body,M5 washer
 "Wire, connectors, XT60, ferrules, heat-shrink, cable ties",1,1000,1000,estimate,local electrical shop,to buy,,the 250 g wiring allowance in the mass budget
 Practice sand pit + printed AprilTags,1,1000,1000,estimate,local,to buy,,"beach, volleyball or construction sand is fine; for the working-rover video"
 "Lift limit switches: 2 micro switches with lever, wire",1,100,100,estimate,Robu / Amazon.in,to buy,,not in the model; one at each end of the lift channel
+Encoder upgrade: 2 of the 4 drive motors as Johnson 30 RPM quad-encoder (one per side),2,668,1336,listed,"Robokits 30 RPM Johnson quad encoder motor 1,080 minus the plain RKI-1156 at 412, seen 2026-10-01",to buy,,"the plain Johnson motors have no encoder, so v2 had no wheel odometry and no closed-loop speed control; the encoder sits on the rear of the motor can, inboard of the gearbox, so the cradles are unchanged. Re-measure the can length (JM_CAN_LEN)"
 "Spares (motor, driver, fuses, cells)",1,1500,1500,estimate,Robokits / Robu / local,to buy,,same allowance as v1
-"TOTAL (excludes the Raspberry Pi 5, which the team owns, the dual-band router, laptops, printer and travel)",,,23329,,,,,
+"TOTAL (excludes the Raspberry Pi 5, which the team owns, the dual-band router, laptops, printer and travel)",,,24715,,,,,
