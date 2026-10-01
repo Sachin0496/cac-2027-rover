@@ -1,7 +1,7 @@
 # CAC 2027 Rover — Project Context
 
 Single source of truth for the team (and for any AI assistant helping us).
-Last updated: **2026-09-28**. Rules below are a summary of the official CAC 2027
+Last updated: **2026-09-29** (v2 CAD added: see §10). Rules below are a summary of the official CAC 2027
 problem statement — always check the latest PDF (links in §16) before relying on a number.
 
 ---
@@ -218,6 +218,10 @@ is an estimate. The PZEM-051 is sold on Robu but its price wasn't visible.
   model by `export_freecad.py`; don't edit it by hand. Install: `brew install --cask freecad`.
 - **Onshape (free Education plan)** — optional browser alternative if several people need to edit
   the same model at once; each person signs up with a student account.
+- **v2 (2026-09-29): build123d, in `cad-v2/`.** Same concept, re-engineered: parametric Python CAD on the OpenCascade kernel (the one FreeCAD uses), scripted checks for every claim
+  (`python tasks.py check`), B-rep STEP + watertight STLs, an interactive viewer (`cad-v2/out/rover_v2_viewer.html`). Guide: `docs/v2-build-guide.md`; ledger of changes: `docs/v2-changelog.md`;
+  priced parts: `docs/v2-order-list.md` and `hardware/bom_v2.csv` (≈ ₹23.3k). Empty mass 7.94 kg with a 250 g wiring allowance (v1 ≈ 7.0 kg on the same accounting), front-axle share 74 % with a full drum (v1 80 %).
+  v1 in `cad/` is untouched. Print the fit-test kit (`cad-v2/out/stl/fit_test_kit.stl`) before anything else.
 - **Day 1:** a 1:1 cardboard mock-up to check the envelope and component layout before CAD.
 - Why bother with CAD: envelope inspection, printing, and the ₹30k Best Design Award.
 

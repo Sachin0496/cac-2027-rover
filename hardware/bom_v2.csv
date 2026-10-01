@@ -1,0 +1,55 @@
+item,qty,unit_price_inr,total_inr,price_basis,source,purchase_status,used_in,notes
+"2020 T-slot, 1 m lengths",3,420,1260,listed,Fastdep 420 incl. GST (heavy); Robu EasyMech 1 m; ~398 from,to buy,chassis/excavator/tower,"2020 T-slot B-type slot 6, 1 m lengths, cut with a hacksaw (+-1 mm is fine) or by the vendor; one bar each: 402+402; 260+260+259; 240+212"
+corner bracket 2020,12,25,300,listed,3DPrintronics 32; IndiaMART 19 per piece,to buy,chassis,2020 inside corner bracket
+M5x8 button,42,3,126,estimate,local / Amazon.in,to buy,chassis/excavator/electronics/tower/body,ISO 7380 button head
+T-nut M5 spring,76,8,608,estimate,Amazon.in kits / Mech Shop,to buy,chassis/drive/excavator/electronics/tower/body,M5 drop-in spring T-nut for a 2020 slot 6 (SuperbTech sliding nuts: 10 for 145)
+motor_johnson_30rpm,5,412,2060,listed,"Robokits RKI-1156 (Grade A), 2026-09-29",to buy,drive/excavator,"Johnson 12 V 30 RPM side-shaft, 32 kg.cm (4 drive + 1 drum); measure one before printing the cradles"
+bearing_608,15,35,525,estimate,local / Robu,to buy,drive/excavator,608-2RS
+coupler_6_8,6,100,600,estimate,RoboticsDNA ZRB-19x25 at 65 (out of stock 2026-09-29); Robu 100-150,to buy,drive/excavator,"aluminium helical coupler 6 to 8 mm, D19 x L25"
+M8x75 hex,4,18,72,estimate,local hardware,to buy,drive,"ISO 4017 hex bolt, partly threaded (wheel axles)"
+M8 nyloc,8,6,48,estimate,local hardware,to buy,drive/excavator,nyloc nut
+M8 washer,10,2,20,estimate,local hardware,to buy,drive/excavator,M8 washer
+M5x12 button,8,3,24,estimate,local / Amazon.in,to buy,drive,ISO 7380 button head
+M5x14 button,8,3,24,estimate,local / Amazon.in,to buy,drive,ISO 7380 button head
+M4x40 socket,10,3,30,estimate,local / Amazon.in,to buy,drive/excavator,ISO 4762 socket head
+M4 nut,44,1,44,estimate,local / Amazon.in,to buy,drive/excavator/electronics/body,hex nut
+M4x14 socket,16,2.5,40,estimate,local / Amazon.in,to buy,drive,ISO 4762 socket head
+M5x10 button,6,3,18,estimate,local / Amazon.in,to buy,excavator,ISO 7380 button head
+M8x35 hex,2,13,26,estimate,local hardware,to buy,excavator,ISO 4017 hex bolt (arm pivots)
+tof_vl53,3,500,1500,listed,Robokits 402; KTRON 570 (v1 price),to buy,excavator/tower,VL53L1X ToF sensor: 2 front (wheel tracks) + 1 rear; Class 1 laser (allowed)
+M8 threaded rod 150 mm,1,40,40,estimate,local hardware,to buy,excavator,lift screw: cut 150 mm from a 1 m zinc or stainless M8 rod (about 100 INR per metre)
+motor_johnson_300rpm,1,477,477,listed,"Robokits RKI-1144 (Grade A), 2026-09-29",to buy,excavator,Johnson 12 V 300 RPM for the lift screw
+M4 nyloc,10,2,20,estimate,local / Amazon.in,to buy,excavator,nyloc nut
+M4x30 socket,4,3,12,estimate,local / Amazon.in,to buy,excavator,ISO 4762 socket head
+M4x25 socket,4,3,12,estimate,local / Amazon.in,to buy,excavator,ISO 4762 socket head
+M5x16 socket,6,3,18,estimate,local / Amazon.in,to buy,excavator,ISO 4762 socket head (clamp screws)
+M5x40 socket,2,4,8,estimate,local / Amazon.in,to buy,excavator,ISO 4762 socket head (link pins)
+M5 nyloc,2,2.5,5,estimate,local / Amazon.in,to buy,excavator,nyloc nut
+M8 brass nut,2,12,24,estimate,local hardware,to buy,excavator,"brass hex nut M8, two per carriage"
+M4 threaded rod 211 mm,4,10,40,estimate,local hardware,to buy,excavator,drum tie rods: buy one 1 m M4 rod (about 40 INR) and cut four 211 mm lengths with a hacksaw
+M8x70 hex,1,16,16,estimate,local hardware,to buy,excavator,ISO 4017 hex bolt (drum drive axle)
+M8x40 hex,1,13,13,estimate,local hardware,to buy,excavator,ISO 4017 hex bolt (drum idler axle)
+bts7960,4,300,1200,listed,Robokits RKI-6606 at 256; others 329-353 (v1 price),to buy,electronics,"43 A H-bridge driver: left drive, right drive, drum, lift"
+relay,1,250,250,estimate,Amazon.in / local electrical shop,to buy,electronics,"12 V 40 A automotive relay with socket, fails open"
+buck,1,250,250,estimate,Amazon.in / Robu,to buy,electronics,5 V 5 A step-down (LM2596/XL4015 class) for the Pi and sensors
+fuse_holder,2,100,200,estimate,Amazon.in / local electrical shop,to buy,electronics,inline blade-fuse holder (main and branch)
+pi5,1,0,0,have,the team has it,have,electronics,Raspberry Pi 5 with active cooler (excluded from the total)
+esp32,1,500,500,estimate,Robu / Amazon.in (v1 price),to buy,electronics,"ESP32 dev board: motor PWM, encoders, limit switches"
+mpu6050,1,200,200,estimate,Robu / Amazon.in (v1 price),to buy,electronics,"6-axis IMU, no magnetometer"
+battery_3s2p,1,2500,2500,estimate,BatteryWorks 3S2P 5200 mAh pack listed at 900; pack with 20 A BMS and charger (v1 price),to buy,electronics,"3S2P Li-ion pack, 11.1 V, at least 20 A BMS, plus 12.6 V charger"
+M4x8 socket,2,2.5,5,estimate,local / Amazon.in,to buy,electronics,ISO 4762 socket head
+estop,1,400,400,estimate,"Evelta XB2-BS542 at 198 (head size not in the listing: the genuine XB2-BS542 is 40 mm, check it); Probots ProMax metal at 899",to buy,tower,"22 mm panel-mount, twist-release, red mushroom head of at least 40 mm (modelled with 60 mm); any listed head size complies"
+estop_body,1,0,0,have,with the E-stop,have,tower,contact block of the panel-mount E-stop (priced with the head)
+pzem051,1,2000,2000,estimate,Robu.in (price not visible on 2026-09-29; Alibaba $8.5 wholesale),to buy,tower,"PZEM-051 DC energy meter with 50 A shunt, wired between battery and E-stop (v1 price, probably lower)"
+servo_sg90,1,150,150,estimate,Robu / Amazon.in (v1 price),to buy,tower,camera pan servo
+webcam,1,1000,1000,estimate,Amazon.in (v1 price),to buy,tower,"USB webcam 720p, driving view and AprilTag detection"
+M5x10 socket,6,3,18,estimate,local / Amazon.in,to buy,tower,ISO 4762 socket head (collar clamp screws)
+M4x60 button,8,4,32,estimate,local / Amazon.in,to buy,body,ISO 7380 button head (hood screws)
+M4x100 socket,2,5,10,estimate,local / Amazon.in,to buy,body,ISO 4762 socket head (handle through-bolts)
+M5 washer,4,1,4,estimate,local hardware,to buy,body,M5 washer
+"PETG filament, 1 kg spools",3,1000,3000,estimate,Amazon.in / local,to buy,all printed parts,"printed total 2.55 kg; PETG 1.75 mm, 1 kg spool; buy the printed total x 1.10 for brims, purge and one reprint"
+"Wire, connectors, XT60, ferrules, heat-shrink, cable ties",1,1000,1000,estimate,local electrical shop,to buy,,the 250 g wiring allowance in the mass budget
+Practice sand pit + printed AprilTags,1,1000,1000,estimate,local,to buy,,"beach, volleyball or construction sand is fine; for the working-rover video"
+"Lift limit switches: 2 micro switches with lever, wire",1,100,100,estimate,Robu / Amazon.in,to buy,,not in the model; one at each end of the lift channel
+"Spares (motor, driver, fuses, cells)",1,1500,1500,estimate,Robokits / Robu / local,to buy,,same allowance as v1
+"TOTAL (excludes the Raspberry Pi 5, which the team owns, the dual-band router, laptops, printer and travel)",,,23329,,,,,

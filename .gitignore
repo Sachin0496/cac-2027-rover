@@ -23,3 +23,14 @@ ros2_ws/log/
 
 # Generated STEP is large; the zip is committed instead
 cad/rover_v1.step
+
+# v2 CAD
+cad-v2/.venv/
+cad-v2/render/node_modules/
+cad-v2/out/*.glb
+cad-v2/out/_tmp/
+cad-v2/out/viewer/
+cad-v2/out/renders/
+cad-v2/out/rover_v2.step
+cad-v2/out/rover_v2_viewer.html
+cad-v2/render/*.log
