@@ -22,15 +22,15 @@ ros2_ws/log/
 *.bak
 
 # Generated STEP is large; the zip is committed instead
-cad/rover_v1.step
+legacy-v1-v2/cad/rover_v1.step
 
 # v2 CAD
-cad-v2/.venv/
-cad-v2/render/node_modules/
-cad-v2/out/*.glb
-cad-v2/out/_tmp/
-cad-v2/out/viewer/
-cad-v2/out/renders/
-cad-v2/out/rover_v2.step
-cad-v2/out/rover_v2_viewer.html
-cad-v2/render/*.log
+legacy-v1-v2/cad-v2/.venv/
+legacy-v1-v2/cad-v2/render/node_modules/
+legacy-v1-v2/cad-v2/out/*.glb
+legacy-v1-v2/cad-v2/out/_tmp/
+legacy-v1-v2/cad-v2/out/viewer/
+legacy-v1-v2/cad-v2/out/renders/
+legacy-v1-v2/cad-v2/out/rover_v2.step
+legacy-v1-v2/cad-v2/out/rover_v2_viewer.html
+legacy-v1-v2/cad-v2/render/*.log

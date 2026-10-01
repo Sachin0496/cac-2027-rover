@@ -112,7 +112,7 @@ so the lower tiers appear to stack (e.g. travel + dig + dump = 375). **Confirm w
   effort on reliable autonomy and mobility, not on shaving grams.
 - **Budget ≤ ₹25k, v1 ≈ ₹22k** (≈ ₹19k if the college provides filament). Excludes the
   Raspberry Pis (we have several), a borrowed router, laptops, the college 3D printer and travel.
-- **Excavator = rotating bucket drum** (research-backed, see `docs/v1-build-guide.md`): a light
+- **Excavator = rotating bucket drum** (research-backed, see `legacy-v1-v2/docs/v1-build-guide.md`): a light
   rover can't push a front bucket through sand, but a drum takes small bites, and one part
   digs, carries and dumps.
 - **Autonomy ladder:** 125 (auto dig + dump) → 375 (+ travel) → **450** (one clean autonomous
@@ -126,8 +126,8 @@ so the lower tiers appear to stack (e.g. travel + dig + dump = 375). **Confirm w
 
 ## 7. System design
 
-The v1 CAD model is in `cad/` (open `cad/rover.scad`); the build guide with cut, print and
-hardware lists is `docs/v1-build-guide.md`.
+The v1 CAD model is in `legacy-v1-v2/cad/` (open `legacy-v1-v2/cad/rover.scad`); the build guide with cut, print and
+hardware lists is `legacy-v1-v2/docs/v1-build-guide.md`.
 
 ### Mechanical (v1)
 - 4-wheel skid steer on **Johnson 12 V geared motors, ~30 RPM** (torque first; ~0.27 m/s). The
@@ -178,7 +178,7 @@ hardware lists is `docs/v1-build-guide.md`.
   Every state gets a timeout and a recovery (back up, retry the dig, re-localise, or declare
   failure and hand over to RC).
 
-## 8. Budget (v1 ≈ ₹22k) — full list in `hardware/bom.csv`
+## 8. Budget (v1 ≈ ₹22k) — full list in `legacy-v1-v2/hardware/bom.csv`
 
 | Group | ₹ |
 |---|---|
@@ -203,8 +203,8 @@ is an estimate. The PZEM-051 is sold on Robu but its price wasn't visible.
 
 ## 9. 3D printing plan
 
-- **Print:** 29 part types for v1 (list and quantities in `docs/v1-build-guide.md` §3; STLs in
-  `cad/stl/`), all within a 220 × 220 mm bed and without supports. Also AprilTag stands
+- **Print:** 29 part types for v1 (list and quantities in `legacy-v1-v2/docs/v1-build-guide.md` §3; STLs in
+  `legacy-v1-v2/cad/stl/`), all within a 220 × 220 mm bed and without supports. Also AprilTag stands
   (weighted bases, ≤60 cm).
 - **Settings:** PETG (handles heat and knocks better than PLA), 3–4 walls, 20–25% gyroid infill;
   metal bolts as pivot pins; heat-set inserts wherever screws go into plastic.
@@ -216,18 +216,18 @@ is an estimate. The PZEM-051 is sold on Robu but its price wasn't visible.
 **Decision (2026-09-28): free tools only, no paid licences.**
 
 - **OpenSCAD** (free) — the v1 model is written in OpenSCAD and is the editable master:
-  `cad/rover.scad` (assembly), `cad/params.scad` (all shared dimensions), one file per
+  `legacy-v1-v2/cad/rover.scad` (assembly), `legacy-v1-v2/cad/params.scad` (all shared dimensions), one file per
   subsystem. `check_interference.py` checks for collisions; `export.py` makes the STLs.
   Install on macOS: `brew install --cask openscad@snapshot` (the stable 2021 cask is disabled).
 - **FreeCAD 1.1** (free, open-source, offline) — for viewing, measuring and new parts.
-  `cad/rover_v1.FCStd` (and `rover_v1.step.zip` for other CAD) is generated from the OpenSCAD
+  `legacy-v1-v2/cad/rover_v1.FCStd` (and `rover_v1.step.zip` for other CAD) is generated from the OpenSCAD
   model by `export_freecad.py`; don't edit it by hand. Install: `brew install --cask freecad`.
 - **Onshape (free Education plan)** — optional browser alternative if several people need to edit
   the same model at once; each person signs up with a student account.
-- **v2 (2026-09-29): build123d, in `cad-v2/`.** Same concept, re-engineered: parametric Python CAD on the OpenCascade kernel (the one FreeCAD uses), scripted checks for every claim
-  (`python tasks.py check`), B-rep STEP + watertight STLs, an interactive viewer (`cad-v2/out/rover_v2_viewer.html`). Guide: `docs/v2-build-guide.md`; ledger of changes: `docs/v2-changelog.md`;
-  priced parts: `docs/v2-order-list.md` and `hardware/bom_v2.csv` (≈ ₹23.3k). Empty mass 7.94 kg with a 250 g wiring allowance (v1 ≈ 7.0 kg on the same accounting), front-axle share 74 % with a full drum (v1 80 %).
-  v1 in `cad/` is untouched. Print the fit-test kit (`cad-v2/out/stl/fit_test_kit.stl`) before anything else.
+- **v2 (2026-09-29): build123d, in `legacy-v1-v2/cad-v2/`.** Same concept, re-engineered: parametric Python CAD on the OpenCascade kernel (the one FreeCAD uses), scripted checks for every claim
+  (`python tasks.py check`), B-rep STEP + watertight STLs, an interactive viewer (`legacy-v1-v2/cad-v2/out/rover_v2_viewer.html`). Guide: `legacy-v1-v2/docs/v2-build-guide.md`; ledger of changes: `legacy-v1-v2/docs/v2-changelog.md`;
+  priced parts: `legacy-v1-v2/docs/v2-order-list.md` and `legacy-v1-v2/hardware/bom_v2.csv` (≈ ₹24.7k after the 2026-10-01 review). Empty mass 7.94 kg with a 250 g wiring allowance (v1 ≈ 7.0 kg on the same accounting), front-axle share 74 % with a full drum (v1 80 %).
+  v1 in `legacy-v1-v2/cad/` is untouched. Print the fit-test kit (`legacy-v1-v2/cad-v2/out/stl/fit_test_kit.stl`) before anything else.
 - **Day 1:** a 1:1 cardboard mock-up to check the envelope and component layout before CAD.
 - Why bother with CAD: envelope inspection, printing, and the ₹30k Best Design Award.
 
@@ -339,7 +339,7 @@ Reviewed: the 2027 problem statement and resources guide, the 2026 rulebook, `CO
 - **Markers.** Only on the start-zone frame (2 sides) plus one on the start-zone wall, within 60 cm of the floor, ≤ 25 x 25 cm, one tag per marker, non-glare, maximum 5 (all tags), placed during the 5-minute prelims setup. Make clamp-on tag boards (printed clamps or tape-on plates) and practise placing them with two people in under 60 s. Tag range of ~5 m at 640 x 480 will not cover the whole arena: plan for dead reckoning (gyro + encoders) between the start and construction zones, and re-localise on every tag sighting. Calibrate the MPU6050 gyro bias for 5 s while stationary during setup.
 - **Hands-free procedure.** In 2027 you must declare each autonomy attempt out loud to the Mission Control Judge before the robot starts, and a declared failure must be announced before resuming manual control. Nobody touches the laptop or controller during an attempt (E-stop is on the robot, so MCC cannot E-stop). Write the exact script and rehearse it.
 - **Logger "highest practical location".** The PZEM sits at z = 321 mm below the camera head at 445 mm. The rules want it highest practical, so if a judge objects, swap the PZEM collar with the head collar (the mast carries 750 mm).
-- **Mobility video.** The resources guide asks teams to check their design with the mobility equation from the Lunabotics workshop. Do that and keep the working in `docs/`: ground pressure here is only ~15 kPa per wheel (36 N over a 60 x 40 mm patch at the loaded front axle), so a light rover should pass, but the guide says many teams failed on mobility in 2026.
+- **Mobility video.** The resources guide asks teams to check their design with the mobility equation from the Lunabotics workshop. Do that and keep the working in `legacy-v1-v2/docs/`: ground pressure here is only ~15 kPa per wheel (36 N over a 60 x 40 mm patch at the loaded front axle), so a light rover should pass, but the guide says many teams failed on mobility in 2026.
 
 ### What the model checks do and do not cover
 Mass, balance, collisions at five poses, print rules, load paths, E-stop reach, PZEM view and the 750 mm height limit are scripted and pass (see `python tasks.py check`). Nothing scripted covers: encoders and wiring, radios, tag mounting, dig depth, drum retention of sand in the carry pose, sand ingress under the open belly, and the hazard-sensor blind zones above. These are on the bench-test list in §11.
